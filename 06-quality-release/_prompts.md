@@ -32,7 +32,25 @@
 
 ---
 
-## Prompt 3: Deploy to Production
+## Prompt 3: Finalize Documentation
+
+> **Context:** All acceptance criteria pass. Before deploying, we need to finalize the project documentation.
+>
+> **Input:** Review these files:
+> - `docs/changelog.md`
+> - `docs/app-readme.md`
+> - `docs/master-spec.md` (for Out of Scope → Known Limitations)
+>
+> **Task:**
+> 1. Review `docs/changelog.md` — are all build phases logged? Are there placeholder entries that need filling in? Are Technical Notes captured for non-obvious implementation decisions?
+> 2. Review `docs/app-readme.md` — does every section match the actual app? Are setup instructions accurate and complete? Are env vars listed? Is the project structure current? Are Available Scripts documented?
+> 3. Fill in the Known Limitations section of `docs/app-readme.md` from the Out of Scope section of the master spec.
+> 4. Fix anything that contradicts how the app actually works.
+> 5. Output the finalized versions of both files.
+
+---
+
+## Prompt 4: Deploy to Production
 
 > **Context:** All acceptance criteria pass. Ready to deploy.
 >
@@ -52,6 +70,8 @@
 - [ ] Acceptance sweep completed (`06-quality-release/acceptance-sweep.md`)
 - [ ] All failing acceptance criteria fixed and re-verified
 - [ ] Cross-cutting QA checklist passed (loading, errors, empty states, nav, responsive, perf, security)
+- [ ] `docs/changelog.md` finalized — all phases logged, no placeholders, Technical Notes complete
+- [ ] `docs/app-readme.md` finalized — setup instructions verified, all sections accurate
 - [ ] All code committed with clean git status
 - [ ] Database migrations applied (if any)
 - [ ] Environment variables set in production

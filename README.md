@@ -48,7 +48,9 @@ As you complete each phase, the output documents land in the `docs/` folder. The
 │   ├── concept-brief.md
 │   ├── master-spec.md
 │   ├── implementation-plan.md
-│   └── deployment-pipeline.md
+│   ├── deployment-pipeline.md
+│   ├── changelog.md                ← What changed per build phase + technical decisions
+│   └── app-readme.md              ← Your app's README (setup, run, architecture)
 │
 ├── 01-vision/                      ← Phase 1: Brain dump + concept refinement
 │   ├── brain-dump.md               ← YOUR raw ideas go here first

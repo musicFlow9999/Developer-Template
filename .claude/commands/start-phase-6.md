@@ -23,8 +23,18 @@ Then:
   - After each fix, explain how to verify it
   - Do not refactor working code or add new features during QA
 
+- **Finalize Documentation:**
+  - Read `docs/changelog.md` — verify all build phases are logged with no placeholder entries. Add any missing entries. Ensure Technical Notes capture non-obvious decisions.
+  - Read `docs/app-readme.md` — verify every section is accurate and complete:
+    - Setup instructions actually work (prerequisites, install, env vars, run commands)
+    - Project structure matches the actual codebase
+    - Available scripts are listed
+    - Architecture overview reflects what was built
+    - Known Limitations populated from `docs/master-spec.md` Out of Scope section
+  - Fix any documentation that contradicts the actual app behavior.
+
 - **Deploy:**
-  - Once all criteria pass, walk the user through deployment step by step from `docs/deployment-pipeline.md`
+  - Once all criteria pass and documentation is finalized, walk the user through deployment step by step from `docs/deployment-pipeline.md`
   - Pre-flight check, database migrations, deploy, verify live, confirm rollback plan
 
 - When the app is shipped, congratulate the user. The protocol is complete.

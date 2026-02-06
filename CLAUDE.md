@@ -22,6 +22,8 @@ When these documents exist, they govern all decisions:
 - `docs/master-spec.md` — The technical specification (Phase 2+3 output, hardened)
 - `docs/implementation-plan.md` — Phased build order (Phase 4 output)
 - `docs/deployment-pipeline.md` — Deployment rules and environments (Phase 4 output)
+- `docs/changelog.md` — What changed per build phase, including technical decisions (Phase 5, maintained throughout build)
+- `docs/app-readme.md` — The app's README: setup, run, architecture, tech stack (Phase 5 setup, maintained throughout build, finalized Phase 6)
 
 ## Protocol Rules You Must Follow
 
@@ -92,7 +94,8 @@ When using Claude Code, you have direct access to all files. Do NOT ask the user
 - **Input to read:** `docs/master-spec.md`, `docs/implementation-plan.md`, `docs/deployment-pipeline.md`
 - **Prompts reference:** `05-build/_prompts.md`
 - **Your job:** Build features one at a time, in phase order. Use plan mode for non-trivial features. After each feature: explain what was built, how to test it, which acceptance criteria it satisfies. Track progress in `05-build/build-log.md`. Wait for user verification before moving on.
-- **Build loop:** Implement → Explain → Verify → Commit → Next
+- **Documentation during build:** Generate `docs/app-readme.md` during Phase 0 setup. After each feature, update `docs/changelog.md` and update `docs/app-readme.md` if the feature changes structure, env vars, scripts, or architecture.
+- **Build loop:** Implement → Explain → Verify → Document → Commit → Next
 - **Done when:** All implementation phases complete, all acceptance criteria satisfied
 - **Then:** Update the "Current Phase" section above to Phase 6.
 
@@ -100,8 +103,8 @@ When using Claude Code, you have direct access to all files. Do NOT ask the user
 - **Your role:** Read and adopt `ai-agents/qa-engineer.md`
 - **Input to read:** `docs/master-spec.md` (Acceptance Criteria), `06-quality-release/acceptance-sweep.md`
 - **Prompts reference:** `06-quality-release/_prompts.md`
-- **Your job:** Run the acceptance sweep. Fix failing criteria. Test cross-cutting concerns (loading, errors, empty states, responsive, security). Walk through deployment from `docs/deployment-pipeline.md`.
-- **Done when:** All criteria pass, app is deployed, live site verified.
+- **Your job:** Run the acceptance sweep. Fix failing criteria. Test cross-cutting concerns (loading, errors, empty states, responsive, security). Finalize documentation: review `docs/changelog.md` for completeness and `docs/app-readme.md` for accuracy. Walk through deployment from `docs/deployment-pipeline.md`.
+- **Done when:** All criteria pass, documentation finalized, app is deployed, live site verified.
 
 ### Slash Commands
 

@@ -20,6 +20,7 @@ These prompts are for your **workspace-integrated AI tool** (GitHub Copilot, Cla
 > 3. Set up the design system (colors, fonts, spacing) from the spec's design tokens.
 > 4. Set up the database connection and authentication.
 > 5. Create the folder structure that matches the spec's project layout.
+> 6. Generate `docs/app-readme.md` with: app name, description (from concept brief), prerequisites, install commands, environment variables list, project structure overview, and tech stack.
 >
 > Do this step by step. After each step, tell me what to verify before moving on.
 
@@ -63,8 +64,10 @@ Use after each working feature:
 
 > **Task:**
 > 1. Summarize what was just built in one sentence.
-> 2. Give me the git commands to commit this work with a proper commit message following the format: `[Phase X.Y] Description`
-> 3. Confirm: are there any uncommitted changes or temporary code that should be cleaned up first?
+> 2. Add an entry to `docs/changelog.md` under the current phase: what was added/changed/fixed, and a Technical Note if the implementation involved a non-obvious decision or trade-off.
+> 3. If this feature added new scripts, env vars, changed the project structure, or affected the architecture, update `docs/app-readme.md` accordingly.
+> 4. Give me the git commands to commit this work with a proper commit message following the format: `[Phase X.Y] Description`
+> 5. Confirm: are there any uncommitted changes or temporary code that should be cleaned up first?
 
 ---
 
@@ -75,9 +78,10 @@ Use after each working feature:
 2. BUILD FEATURE → AI creates/modifies code
 3. VERIFY → Run app, check acceptance criteria
 4. FIX (if broken) → Describe what happened, AI fixes
-5. COMMIT → Save snapshot after each feature
-6. NEXT FEATURE → Repeat until phase complete
-7. NEXT PHASE → Repeat for next phase
+5. DOCUMENT → Update changelog + app README if needed
+6. COMMIT → Save snapshot after each feature
+7. NEXT FEATURE → Repeat until phase complete
+8. NEXT PHASE → Repeat for next phase
 ```
 
 **Rules:**
@@ -91,9 +95,12 @@ Use after each working feature:
 ## Phase 5 Checklist
 
 - [ ] Phase 0 (Project Setup) completed and committed
+- [ ] `docs/app-readme.md` generated with setup instructions
 - [ ] App runs locally with no errors
 - [ ] Each implementation phase worked through in order
 - [ ] Every feature verified against acceptance criteria
+- [ ] `docs/changelog.md` updated after each feature
+- [ ] `docs/app-readme.md` kept current (env vars, scripts, structure, architecture)
 - [ ] Build log updated in `05-build/build-log.md`
 - [ ] All phases committed with proper commit messages
 - [ ] Ready for Quality & Release (Phase 6)
