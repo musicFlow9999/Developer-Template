@@ -108,7 +108,7 @@ This template includes configuration files for popular AI coding tools:
 | File | Tool | What It Does |
 |------|------|-------------|
 | `CLAUDE.md` | Claude Code, Claude Projects | Gives Claude automatic context about your project, current phase, protocol rules, and phase orchestration instructions |
-| `.claude/commands/` | Claude Code | Slash commands (`/start-phase-1` through `/start-phase-6`, `/project-status`) that auto-read agent personas and kick off each phase |
+| `.claude/commands/` | Claude Code | Slash commands (`/start-phase-1` through `/start-phase-6`, `/project-status`, `/resume-build`) that auto-read agent personas and kick off each phase |
 | `.claude/settings.json` | Claude Code | Project-level settings for Claude Code |
 | `.github/copilot-instructions.md` | GitHub Copilot | Gives Copilot workspace-level context about your project and build standards |
 | `ai-agents/` | Any AI tool | Pre-written agent personas (system prompts) for each phase — copy into any AI chat |
@@ -129,7 +129,7 @@ The protocol assigns the AI a different **role** in each phase (Product Analyst 
 2. **Never skip the Stress Test.** Phase 3 saves more time than any other phase.
 3. **Don't let AI be a yes-man.** Demand pushback. Ask "What's wrong with this?"
 4. **One change at a time during build.** Build one feature, verify it, commit, move on.
-5. **Save your context.** Always point AI at `docs/master-spec.md` and `docs/implementation-plan.md` at the start of every session.
+5. **Save your context.** If using a chat-based AI, always point it at `docs/master-spec.md` and `docs/implementation-plan.md` at the start of every session. (Claude Code does this automatically.)
 6. **You make the decisions.** AI recommends. You approve.
 7. **Done = checklist passes.** Not "looks done." Acceptance criteria checked = done.
 
@@ -139,19 +139,69 @@ The protocol assigns the AI a different **role** in each phase (Product Analyst 
 
 ### Option A: Claude Code (Recommended)
 
-1. Open your project in the terminal with Claude Code
-2. Fill in `01-vision/brain-dump.md` with your app idea
-3. Type `/start-phase-1` — Claude reads the brain dump, adopts the Product Analyst role, and walks you through the phase
-4. When Phase 1 is done, type `/start-phase-2` and continue through the phases
-5. Use `/project-status` at any time to see where you are
+Claude Code is the smoothest way to use this template. It reads all project files automatically — no copy-pasting prompts, no manually loading context. Here's how it works:
 
-Claude Code reads all files directly — no copy-pasting needed. The `CLAUDE.md` file gives it full context about the protocol, and each slash command loads the right agent persona automatically.
+**Prerequisites:**
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed (`npm install -g @anthropic-ai/claude-code`)
+- A repo created from this template
+
+**First session — start your project:**
+
+1. Open your terminal, `cd` into your project directory, and run `claude`
+2. Claude Code automatically loads `CLAUDE.md`, which contains the full protocol rules and phase orchestration instructions. You don't need to tell it about the project — it already knows.
+3. Fill in `01-vision/brain-dump.md` with your raw app idea (problem, audience, what it does, tools you use, inspiration). You can do this in your editor or ask Claude to help.
+4. Type `/start-phase-1`
+
+That's it. Claude reads your brain dump, adopts the Product Analyst persona, organizes your ideas into a concept brief, and walks you through gap analysis. When you approve the brief, it updates the project to Phase 2.
+
+**Working through the phases:**
+
+| Command | What Happens |
+|---------|-------------|
+| `/start-phase-1` | Reads brain dump, adopts Product Analyst role, produces `docs/concept-brief.md` |
+| `/start-phase-2` | Reads concept brief, adopts Systems Architect role, produces `docs/master-spec.md` |
+| `/start-phase-3` | Reads spec, adopts Hostile Reviewer role, tears it apart, produces hardened spec |
+| `/start-phase-4` | Reads hardened spec, adopts Delivery Lead role, produces implementation plan + deployment pipeline |
+| `/start-phase-5` | Reads all docs, adopts Lead Developer role, builds features one at a time |
+| `/start-phase-6` | Reads spec + app, adopts QA Engineer role, runs acceptance sweep, walks you through deployment |
+
+Each command checks prerequisites automatically. If you try to start Phase 3 before the spec exists, Claude will tell you to finish Phase 2 first.
+
+**Utility commands:**
+
+| Command | What It Does |
+|---------|-------------|
+| `/project-status` | Shows current phase, which documents are complete, and what to do next |
+| `/resume-build` | For when you come back to a new session mid-Phase 5 — reads the build log and git history to figure out exactly where you left off |
+
+**Coming back to a project:**
+
+When you start a new Claude Code session (next day, new terminal, etc.):
+- Claude automatically reloads `CLAUDE.md` with your current phase — no need to re-explain the project
+- If you're mid-build, type `/resume-build` to pick up where you left off
+- If you're between phases, type `/start-phase-X` for the next phase
+- If you're not sure where you are, type `/project-status`
+
+**What's happening under the hood:**
+
+- `CLAUDE.md` auto-loads every session and tells Claude which phase you're in, which documents are the source of truth, and the five protocol rules it must follow
+- Each `/start-phase-X` command reads the corresponding agent persona from `ai-agents/`, the prompt reference from the phase folder, and all relevant input documents
+- Claude reads and writes files directly — it fills in templates, updates the build log, and modifies `CLAUDE.md` to track phase transitions
+- You stay in control: Claude proposes, you approve. It won't move to the next feature or phase without your confirmation.
+
+---
 
 ### Option B: Any Other AI (ChatGPT, Gemini, Copilot Chat, etc.)
 
+If you're not using Claude Code, the template works with any AI through manual prompts:
+
 1. Open `01-vision/brain-dump.md` and dump everything about your idea
 2. Open `01-vision/_prompts.md` and copy-paste Prompt 1 into your AI tool
-3. Optionally paste the agent persona from `ai-agents/product-analyst.md` as a system prompt
-4. Follow the phases in order, using each folder's `_prompts.md`
+3. Optionally paste the agent persona from `ai-agents/product-analyst.md` as a system prompt for better results
+4. Follow the phases in order, using each folder's `_prompts.md` for the prompts
+
+**Tip:** At the start of every session, paste the contents of `docs/master-spec.md` and `docs/implementation-plan.md` so the AI has full context. Claude Code does this automatically, but with other tools you'll need to do it manually.
+
+---
 
 Good luck. Build something great.
