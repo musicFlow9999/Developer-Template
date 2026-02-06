@@ -90,7 +90,8 @@ As you complete each phase, the output documents land in the `docs/` folder. The
 │       ├── start-phase-4.md       ← /start-phase-4 — begin The Plan
 │       ├── start-phase-5.md       ← /start-phase-5 — begin The Build
 │       ├── start-phase-6.md       ← /start-phase-6 — begin Quality & Release
-│       └── project-status.md      ← /project-status — check progress
+│       ├── project-status.md      ← /project-status — check progress
+│       └── resume-build.md       ← /resume-build — pick up where you left off
 │
 ├── src/                            ← Your app code goes here (created in Phase 5)
 │   └── .gitkeep

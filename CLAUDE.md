@@ -108,3 +108,4 @@ When using Claude Code, you have direct access to all files. Do NOT ask the user
 Claude Code users can use these custom commands to start any phase:
 - `/start-phase-1` through `/start-phase-6` — Reads the relevant agent persona, prompt file, and inputs, then begins the phase workflow.
 - `/project-status` — Shows current phase, what's been completed, and what's next.
+- `/resume-build` — Reads the build log and git history to figure out where Phase 5 left off, then picks up from the next feature.
