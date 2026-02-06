@@ -73,6 +73,7 @@ As you complete each phase, the output documents land in the `docs/` folder. The
 │
 ├── 06-quality-release/             ← Phase 6: Final QA + ship it
 │   ├── acceptance-sweep.md         ← Cross-cutting QA checklist
+│   ├── security-review.md         ← Security audit findings log
 │   └── _prompts.md
 │
 ├── ai-agents/                      ← Pre-configured AI agent personas
@@ -81,7 +82,8 @@ As you complete each phase, the output documents land in the `docs/` folder. The
 │   ├── spec-reviewer.md            ← Phase 3 agent
 │   ├── delivery-lead.md            ← Phase 4 agent
 │   ├── lead-developer.md           ← Phase 5 agent
-│   └── qa-engineer.md              ← Phase 6 agent
+│   ├── qa-engineer.md              ← Phase 6 agent
+│   └── security-reviewer.md       ← Security audit agent (Phase 6 / on-demand)
 │
 ├── .claude/                        ← Claude Code project configuration
 │   ├── settings.json              ← Project-level settings
@@ -93,7 +95,8 @@ As you complete each phase, the output documents land in the `docs/` folder. The
 │       ├── start-phase-5.md       ← /start-phase-5 — begin The Build
 │       ├── start-phase-6.md       ← /start-phase-6 — begin Quality & Release
 │       ├── project-status.md      ← /project-status — check progress
-│       └── resume-build.md       ← /resume-build — pick up where you left off
+│       ├── resume-build.md       ← /resume-build — pick up where you left off
+│       └── security-review.md   ← /security-review — on-demand security audit
 │
 ├── src/                            ← Your app code goes here (created in Phase 5)
 │   └── .gitkeep
@@ -110,7 +113,7 @@ This template includes configuration files for popular AI coding tools:
 | File | Tool | What It Does |
 |------|------|-------------|
 | `CLAUDE.md` | Claude Code, Claude Projects | Gives Claude automatic context about your project, current phase, protocol rules, and phase orchestration instructions |
-| `.claude/commands/` | Claude Code | Slash commands (`/start-phase-1` through `/start-phase-6`, `/project-status`, `/resume-build`) that auto-read agent personas and kick off each phase |
+| `.claude/commands/` | Claude Code | Slash commands (`/start-phase-1` through `/start-phase-6`, `/project-status`, `/resume-build`, `/security-review`) that auto-read agent personas and kick off each phase |
 | `.claude/settings.json` | Claude Code | Project-level settings for Claude Code |
 | `.github/copilot-instructions.md` | GitHub Copilot | Gives Copilot workspace-level context about your project and build standards |
 | `ai-agents/` | Any AI tool | Pre-written agent personas (system prompts) for each phase — copy into any AI chat |
@@ -165,7 +168,7 @@ That's it. Claude reads your brain dump, adopts the Product Analyst persona, org
 | `/start-phase-3` | Reads spec, adopts Hostile Reviewer role, tears it apart, produces hardened spec |
 | `/start-phase-4` | Reads hardened spec, adopts Delivery Lead role, produces implementation plan + deployment pipeline |
 | `/start-phase-5` | Reads all docs, adopts Lead Developer role, builds features one at a time |
-| `/start-phase-6` | Reads spec + app, adopts QA Engineer role, runs acceptance sweep, walks you through deployment |
+| `/start-phase-6` | Reads spec + app, runs security audit first, then QA acceptance sweep, finalizes docs, walks you through deployment |
 
 Each command checks prerequisites automatically. If you try to start Phase 3 before the spec exists, Claude will tell you to finish Phase 2 first.
 
@@ -175,6 +178,7 @@ Each command checks prerequisites automatically. If you try to start Phase 3 bef
 |---------|-------------|
 | `/project-status` | Shows current phase, which documents are complete, and what to do next |
 | `/resume-build` | For when you come back to a new session mid-Phase 5 — reads the build log and git history to figure out exactly where you left off |
+| `/security-review` | Run a code-level security audit on-demand — anytime during or after Phase 5. Scans for secrets, injection, auth issues, dependency vulnerabilities, and more |
 
 **Coming back to a project:**
 

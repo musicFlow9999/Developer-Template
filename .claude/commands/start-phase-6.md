@@ -9,6 +9,13 @@ Do the following:
 
 Then:
 
+- **Security Review (first):**
+  - Read and adopt the role defined in `ai-agents/security-reviewer.md`.
+  - Scan the `src/` directory systematically: secrets, auth/authz, injection, API security, data protection, dependencies (`npm audit` or equivalent), headers/config.
+  - Log all findings in `06-quality-release/security-review.md`.
+  - Fix all Critical and High findings before proceeding. Present Medium/Low findings for the user to accept or fix.
+  - Security review must be signed off before continuing to the QA sweep.
+
 - **Acceptance Criteria Sweep:**
   - Go through every acceptance criterion in `docs/master-spec.md`
   - Test each one against the running app

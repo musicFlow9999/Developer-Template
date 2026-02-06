@@ -100,11 +100,11 @@ When using Claude Code, you have direct access to all files. Do NOT ask the user
 - **Then:** Update the "Current Phase" section above to Phase 6.
 
 ### Phase 6 — Quality & Release
-- **Your role:** Read and adopt `ai-agents/qa-engineer.md`
-- **Input to read:** `docs/master-spec.md` (Acceptance Criteria), `06-quality-release/acceptance-sweep.md`
+- **Your role:** Read and adopt `ai-agents/qa-engineer.md` (which includes `ai-agents/security-reviewer.md` as the first step)
+- **Input to read:** `docs/master-spec.md` (Acceptance Criteria + Security), `06-quality-release/acceptance-sweep.md`, `06-quality-release/security-review.md`
 - **Prompts reference:** `06-quality-release/_prompts.md`
-- **Your job:** Run the acceptance sweep. Fix failing criteria. Test cross-cutting concerns (loading, errors, empty states, responsive, security). Finalize documentation: review `docs/changelog.md` for completeness and `docs/app-readme.md` for accuracy. Walk through deployment from `docs/deployment-pipeline.md`.
-- **Done when:** All criteria pass, documentation finalized, app is deployed, live site verified.
+- **Your job:** First, run a code-level security audit — scan `src/` for vulnerabilities, log findings in `06-quality-release/security-review.md`, fix Critical/High issues. Then run the acceptance sweep. Fix failing criteria. Test cross-cutting concerns (loading, errors, empty states, responsive, performance). Finalize documentation: review `docs/changelog.md` for completeness and `docs/app-readme.md` for accuracy. Walk through deployment from `docs/deployment-pipeline.md`.
+- **Done when:** Security review passes, all criteria pass, documentation finalized, app is deployed, live site verified.
 
 ### Slash Commands
 
@@ -112,3 +112,4 @@ Claude Code users can use these custom commands to start any phase:
 - `/start-phase-1` through `/start-phase-6` — Reads the relevant agent persona, prompt file, and inputs, then begins the phase workflow.
 - `/project-status` — Shows current phase, what's been completed, and what's next.
 - `/resume-build` — Reads the build log and git history to figure out where Phase 5 left off, then picks up from the next feature.
+- `/security-review` — Runs a code-level security audit on-demand (anytime during or after Phase 5). Scans for secrets, auth issues, injection, dependency vulnerabilities, and more.

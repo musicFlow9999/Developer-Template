@@ -4,6 +4,33 @@
 
 ---
 
+## Prompt 0: Security Review (Run First)
+
+> **Role:** Security Reviewer
+>
+> **Context:** The build is complete. Before running the QA sweep, I need a code-level security audit.
+>
+> **Input:** Here is the `master-spec.md` (focus on security rules in Tech Requirements):
+>
+> [PASTE RELEVANT SECTIONS OF `docs/master-spec.md`]
+>
+> **Input:** The source code is in `src/`. [If using a chat-only AI, paste relevant source files — focus on auth middleware, API routes, database queries, and environment config.]
+>
+> **Task:** Review the codebase for security vulnerabilities. Check these categories in order:
+> 1. **Secrets** — Hardcoded API keys, tokens, or passwords in source code. Env files in `.gitignore`.
+> 2. **Auth/Authz** — Every protected route checks auth. No broken access control (User A can't access User B's data).
+> 3. **Injection** — SQL queries are parameterized. User input is sanitized before rendering (no XSS). No command injection.
+> 4. **API Security** — Request validation, rate limiting on login/signup, CORS not set to `*`, errors don't leak internals.
+> 5. **Data Protection** — Sensitive data not logged, no over-fetching from database.
+> 6. **Dependencies** — Run `npm audit` (or equivalent). Flag known vulnerabilities.
+> 7. **Headers/Config** — Security headers set, cookies have HttpOnly/Secure/SameSite, debug mode off in production.
+>
+> For each finding, provide: severity (Critical/High/Medium/Low), the file and line, what's wrong, how an attacker could exploit it, and the exact fix.
+>
+> Log results in `06-quality-release/security-review.md`.
+
+---
+
 ## Prompt 1: Fix Failing Acceptance Criteria
 
 > **Context:** The build is complete. I'm doing the final quality check against `docs/master-spec.md`.
@@ -67,6 +94,9 @@
 
 ## Phase 6 Checklist
 
+- [ ] Security review completed (`06-quality-release/security-review.md`)
+- [ ] All Critical and High security findings fixed
+- [ ] Medium/Low security findings fixed or accepted with reasoning
 - [ ] Acceptance sweep completed (`06-quality-release/acceptance-sweep.md`)
 - [ ] All failing acceptance criteria fixed and re-verified
 - [ ] Cross-cutting QA checklist passed (loading, errors, empty states, nav, responsive, perf, security)
